@@ -13,6 +13,7 @@
       --bg-card: #0c0f18;
       --accent-neon: #25f2a5;
       --accent-blue: #33b5ff;
+      --accent-danger: #ff4b6a;
       --text-main: #f4fbff;
       --text-muted: #9aa7c3;
       --border-soft: rgba(255, 255, 255, 0.08);
@@ -93,13 +94,27 @@
       gap: 10px;
     }
 
-    .logo-mark {
-      width: 30px;
-      height: 30px;
-      border-radius: 10px;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #defef5, var(--accent-neon));
-      box-shadow: 0 0 12px rgba(37, 242, 165, 0.8);
-    }
+    .logo-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: #05060a;              /* donker vlak achter witte logo */
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* subtiele donkere gloed */
+  padding: 4px;                      /* beetje ruimte rond logo */
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast),
+              filter var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.logo-wrap:hover .logo-img {
+  transform: scale(1.06) rotate(-2deg);
+  box-shadow: 0 0 18px rgba(37, 242, 165, 0.9);
+  border-color: rgba(37, 242, 165, 0.7);
+  filter: brightness(1.02);
+}
 
     .logo-main {
       font-family: "Orbitron", system-ui;
@@ -127,16 +142,32 @@
     }
 
     .nav-links a {
+      position: relative;
       text-decoration: none;
       color: var(--text-muted);
       padding-bottom: 2px;
-      border-bottom: 1px solid transparent;
-      transition: color var(--transition-fast), border-color var(--transition-fast);
+      transition: color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-neon), var(--accent-blue));
+      transition: width var(--transition-fast);
     }
 
     .nav-links a:hover {
       color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .nav-cta {
@@ -153,6 +184,7 @@
       border-radius: var(--radius-pill);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: var(--text-muted);
+      background: radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.18), transparent 60%);
     }
 
     .btn-primary {
@@ -167,14 +199,21 @@
       color: #020305;
       background: linear-gradient(120deg, var(--accent-neon), var(--accent-blue));
       box-shadow: 0 0 16px rgba(37, 242, 165, 0.55);
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        filter var(--transition-fast),
+        background-position 0.3s ease-out;
       white-space: nowrap;
+      background-size: 180% 180%;
+      background-position: 0% 50%;
     }
 
     .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 18px rgba(37, 242, 165, 0.75);
-      filter: brightness(1.03);
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(37, 242, 165, 0.9);
+      filter: brightness(1.06);
+      background-position: 100% 50%;
     }
 
     .btn-primary:active {
@@ -190,18 +229,35 @@
       text-transform: uppercase;
       cursor: pointer;
       border: 1px solid rgba(255, 255, 255, 0.16);
-      background: transparent;
+      background: rgba(5, 7, 14, 0.9);
       color: var(--text-main);
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+      transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .btn-ghost::after {
+      content: "↻";
+      font-size: 0.8rem;
+      opacity: 0.7;
+      transition: transform var(--transition-fast), opacity var(--transition-fast);
     }
 
     .btn-ghost:hover {
       background: rgba(255, 255, 255, 0.04);
       border-color: rgba(255, 255, 255, 0.28);
       transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-ghost:hover::after {
+      transform: translateX(2px);
+      opacity: 1;
     }
 
     .nav-toggle {
@@ -222,6 +278,7 @@
       border-radius: 999px;
       background: var(--text-main);
       position: relative;
+      transition: transform var(--transition-fast), background var(--transition-fast);
     }
 
     .nav-toggle-line::before,
@@ -233,6 +290,7 @@
       border-radius: 999px;
       background: var(--text-main);
       left: 0;
+      transition: transform var(--transition-fast), top var(--transition-fast), bottom var(--transition-fast), opacity var(--transition-fast);
     }
 
     .nav-toggle-line::before {
@@ -290,6 +348,12 @@
       border-radius: 999px;
       background: var(--accent-neon);
       box-shadow: 0 0 8px rgba(37, 242, 165, 0.7);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.6; }
     }
 
     .hero-title {
@@ -303,7 +367,7 @@
     }
 
     .hero-title span.danger {
-      background: linear-gradient(130deg, #ffdde5, #ff4b6a);
+      background: linear-gradient(130deg, #ffdde5, var(--accent-danger));
       -webkit-background-clip: text;
       color: transparent;
     }
@@ -336,10 +400,39 @@
 
     .hero-right {
       border-radius: 18px;
-      background: var(--bg-card);
+      background: radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.18), transparent 55%), var(--bg-card);
       border: 1px solid var(--border-soft);
       padding: 20px 18px;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform var(--transition-med),
+        box-shadow var(--transition-med),
+        border-color var(--transition-med);
+    }
+
+    .hero-right::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.12), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(51, 181, 255, 0.12), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-med), transform var(--transition-med);
+    }
+
+    .hero-right:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 52px rgba(0, 0, 0, 0.92);
+      border-color: rgba(37, 242, 165, 0.6);
+    }
+
+    .hero-right:hover::before {
+      opacity: 1;
+      transform: translate3d(-8px, -8px, 0);
     }
 
     .hero-metric-label {
@@ -381,6 +474,13 @@
       border-radius: var(--radius-pill);
       background: rgba(13, 16, 30, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .hero-metric-tag:hover {
+      transform: translateY(-1px);
+      border-color: rgba(37, 242, 165, 0.8);
+      background: #101420;
     }
 
     /* Section Headings */
@@ -431,6 +531,34 @@
       border: 1px solid rgba(255, 75, 106, 0.4);
       color: #ffdfe8;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .problem-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 75, 106, 0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.9);
+      border-color: rgba(255, 75, 106, 0.7);
+      background: #1a0c11;
+    }
+
+    .problem-card:hover::after {
+      opacity: 1;
     }
 
     .problem-icon {
@@ -446,6 +574,32 @@
       border: 1px solid rgba(37, 242, 165, 0.4);
       font-size: 0.9rem;
       color: var(--text-main);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .problem-contrast::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(51, 181, 255, 0.12), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .problem-contrast:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(37, 242, 165, 0.7);
+    }
+
+    .problem-contrast:hover::before {
+      opacity: 1;
+      transform: translate3d(-6px, -4px, 0);
     }
 
     .problem-right {
@@ -455,6 +609,29 @@
       padding: 16px 16px 14px;
       font-size: 0.9rem;
       color: var(--text-muted);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .problem-right::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.06), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast);
+    }
+
+    .problem-right:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85);
+      transform: translateY(-2px);
+    }
+
+    .problem-right:hover::before {
+      opacity: 1;
     }
 
     .problem-right strong {
@@ -503,7 +680,23 @@
       padding: 12px 12px;
       font-size: 0.88rem;
       color: var(--text-muted);
-      transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+      transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .solution-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.12), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+      pointer-events: none;
     }
 
     .solution-card-title {
@@ -515,7 +708,13 @@
     .solution-card:hover {
       border-color: rgba(37, 242, 165, 0.6);
       background: #101420;
-      transform: translateY(-1px);
+      transform: translateY(-3px) translateZ(0);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+    }
+
+    .solution-card:hover::before {
+      opacity: 1;
+      transform: translate3d(-4px, -4px, 0);
     }
 
     .solution-panel {
@@ -526,10 +725,39 @@
       font-size: 0.9rem;
       color: var(--text-muted);
       line-height: 1.6;
+      position: relative;
+      overflow: hidden;
+      transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .solution-panel::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 100% 0, rgba(37, 242, 165, 0.18), transparent 55%),
+        radial-gradient(circle at 0 100%, rgba(51, 181, 255, 0.14), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
     }
 
     .solution-panel strong {
       color: var(--text-main);
+    }
+
+    .solution-panel:hover {
+      border-color: rgba(37, 242, 165, 0.7);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.92);
+    }
+
+    .solution-panel:hover::after {
+      opacity: 1;
+      transform: translate3d(6px, -4px, 0);
     }
 
     /* Wat maakt ons anders */
@@ -558,7 +786,19 @@
       padding: 14px 14px;
       font-size: 0.9rem;
       color: var(--text-muted);
-      transition: border-color var(--transition-fast), transform var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .diff-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.16), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+      pointer-events: none;
     }
 
     .diff-icon {
@@ -574,7 +814,13 @@
 
     .diff-card:hover {
       border-color: rgba(37, 242, 165, 0.7);
-      transform: translateY(-1px);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.92);
+    }
+
+    .diff-card:hover::before {
+      opacity: 1;
+      transform: translate3d(-6px, -4px, 0);
     }
 
     /* Pricing */
@@ -600,7 +846,25 @@
       gap: 10px;
       font-size: 0.9rem;
       box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85);
-      transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+      transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .pricing-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(51, 181, 255, 0.16), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
     }
 
     .pricing-card.featured {
@@ -608,9 +872,15 @@
     }
 
     .pricing-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(37, 242, 165, 0.7);
-      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.9);
+      transform: translateY(-4px);
+      border-color: rgba(37, 242, 165, 0.85);
+      box-shadow: 0 20px 52px rgba(0, 0, 0, 0.96);
+      background: #101421;
+    }
+
+    .pricing-card:hover::before {
+      opacity: 1;
+      transform: translate3d(-6px, -6px, 0);
     }
 
     .pricing-label {
@@ -634,6 +904,7 @@
       border: 1px solid rgba(51, 181, 255, 0.6);
       color: var(--accent-blue);
       align-self: flex-start;
+      background: rgba(5, 11, 20, 0.9);
     }
 
     .pricing-price {
@@ -714,7 +985,7 @@
 
     .pricing-btn:hover {
       background: #ffffff;
-      transform: translateY(-1px);
+      transform: translateY(-1px) translateZ(0);
       box-shadow: 0 0 14px rgba(255, 255, 255, 0.2);
     }
 
@@ -748,6 +1019,18 @@
       border: 1px solid var(--border-soft);
       font-size: 0.88rem;
       color: var(--text-main);
+      transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .why-item:hover {
+      border-color: rgba(37, 242, 165, 0.7);
+      background: #101420;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.9);
     }
 
     .why-check {
@@ -760,6 +1043,7 @@
       justify-content: center;
       font-size: 0.7rem;
       color: #020305;
+      box-shadow: 0 0 10px rgba(37, 242, 165, 0.8);
     }
 
     .why-note {
@@ -770,10 +1054,39 @@
       font-size: 0.9rem;
       color: var(--text-muted);
       line-height: 1.6;
+      position: relative;
+      overflow: hidden;
+      transition:
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+    }
+
+    .why-note::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(51, 181, 255, 0.16), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
     }
 
     .why-note strong {
       color: var(--text-main);
+    }
+
+    .why-note:hover {
+      border-color: rgba(37, 242, 165, 0.7);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.94);
+    }
+
+    .why-note:hover::before {
+      opacity: 1;
+      transform: translate3d(-6px, -4px, 0);
     }
 
     /* Closing */
@@ -790,6 +1103,32 @@
       border: 1px solid var(--border-soft);
       padding: 26px 20px 30px;
       box-shadow: 0 16px 46px rgba(0, 0, 0, 0.9);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med);
+    }
+
+    .closing-inner::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 242, 165, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(51, 181, 255, 0.18), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-med), transform var(--transition-med);
+    }
+
+    .closing-inner:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.96);
+      border-color: rgba(37, 242, 165, 0.7);
+    }
+
+    .closing-inner:hover::before {
+      opacity: 1;
+      transform: translate3d(-6px, -4px, 0);
     }
 
     .closing-title {
@@ -840,14 +1179,15 @@
     .footer-links a {
       text-decoration: none;
       color: var(--text-muted);
-      transition: color var(--transition-fast);
+      transition: color var(--transition-fast), transform var(--transition-fast);
     }
 
     .footer-links a:hover {
       color: var(--text-main);
+      transform: translateY(-1px);
     }
 
-    /* Reveal (veel soberder) */
+    /* Reveal (subtiele scroll-animaties) */
     .reveal {
       opacity: 0;
       transform: translateY(14px);
@@ -869,7 +1209,12 @@
       <div class="container">
         <nav class="nav">
           <div class="logo-wrap">
-            <div class="logo-mark" aria-hidden="true"></div>
+            <!-- PAS HIER HET PAD AAN NAAR JE LOGO -->
+            <img
+              src="aegiswit.png"
+              alt="Aegis VDO Netwerkbeheer logo"
+              class="logo-img"
+            />
             <div>
               <div class="logo-main">Aegis VDO</div>
               <div class="logo-sub">NETWERKBEHEER & CYBERSECURITY</div>
@@ -884,7 +1229,7 @@
           </div>
 
           <div class="nav-cta">
-            <div class="nav-pill">Voor KMO’s & start-ups</div>
+            <div class="nav-pill">Voor kleine KMO’s & start-ups</div>
             <button class="btn-primary" onclick="document.getElementById('oplossing').scrollIntoView({behavior:'smooth'})">
               Ontdek onze aanpak
             </button>
@@ -907,12 +1252,14 @@
             <span>Extern IT-team voor kritische netwerken</span>
           </div>
           <h1 class="hero-title reveal reveal-delay-1">
-            <span class="danger">Uw netwerk valt uit.</span><br />Uw data is kwetsbaar.
+            <span class="danger">Je netwerk valt uit.</span><br />
+            Je data is kwetsbaar.
           </h1>
           <p class="hero-subtitle reveal reveal-delay-2">
-            <strong>Elke minuut downtime kost u geld, vertrouwen en reputatie.</strong><br />
-            Aegis VDO Netwerkbeheer beschermt uw onderneming tegen digitale risico’s – proactief, 24/7 en op maat
-            van KMO’s en snelgroeiende start-ups.
+            <strong>Cyberaanvallen worden steeds professioneler.</strong><br />
+            En toch moet je kiezen tussen een dure, onpersoonlijke IT‑gigant of het zelf proberen oplossen zonder
+            expertise. Aegis VDO Netwerkbeheer biedt een derde weg: een toegewijd extern IT‑team voor kleine KMO’s en
+            start‑ups, met een helder abonnementsmodel.
           </p>
           <div class="hero-cta-row reveal reveal-delay-2">
             <button class="btn-primary" onclick="document.getElementById('oplossing').scrollIntoView({behavior:'smooth'})">
@@ -923,7 +1270,7 @@
             </button>
           </div>
           <div class="hero-note reveal reveal-delay-3">
-            24/7 monitoring, Nederlandstalige support en voorspelbare maandelijkse kosten.
+            24/7 monitoring, Nederlandstalige support en voorspelbare maandelijkse kosten – zonder lange, ondoorzichtige contracten.
           </div>
         </div>
 
@@ -933,7 +1280,7 @@
             <span>99,9%</span> beoogde uptime
           </div>
           <div class="hero-metric-sub">
-            Wij bewaken uw firewalls, switches, servers en cloudomgeving zodat incidenten opgevangen worden vóór ze
+            Wij bewaken je firewalls, switches, servers en cloudomgeving zodat incidenten opgevangen worden vóór ze
             voelbaar worden op de werkvloer.
           </div>
           <div class="hero-metric-tags">
@@ -949,7 +1296,7 @@
       <section id="probleem">
         <div class="section-header reveal">
           <div class="section-kicker">Het probleem</div>
-          <h2 class="section-title">De verkeerde IT-aanpak maakt u kwetsbaar</h2>
+          <h2 class="section-title">De verkeerde IT-aanpak maakt je kwetsbaar</h2>
           <p class="section-subtitle">
             Cyberaanvallen, misconfiguraties en verouderde hardware zorgen voor stilstand, dataverlies en
             reputatieschade. De meeste organisaties merken het pas als het al te laat is.
@@ -962,7 +1309,7 @@
               <div class="problem-icon">❌</div>
               <div>
                 <strong>Een dure, onpersoonlijke IT-gigant</strong><br />
-                Lange wachttijden, standaardoplossingen en telkens een andere contactpersoon. Uw business is een nummer
+                Lange wachttijden, standaardoplossingen en telkens een andere contactpersoon. Je business is een nummer
                 in de wachtrij.
               </div>
             </div>
@@ -970,13 +1317,13 @@
               <div class="problem-icon">❌</div>
               <div>
                 <strong>Zelf proberen oplossen zonder expertise</strong><br />
-                Ad-hocoplossingen en workarounds. Tot er écht iets gebeurt: ransomware, datalek of dagenlange downtime.
+                Ad‑hoc fixes en workarounds. Tot er écht iets gebeurt: ransomware, datalekken of dagenlange downtime.
               </div>
             </div>
             <div class="problem-contrast reveal reveal-delay-3">
               <strong>Dat is het probleem dat wij oplossen.</strong><br />
-              Met Aegis VDO krijgt u een toegewijd extern IT-team dat uw omgeving kent, continu monitort en ingrijpt
-              vóór er iets misgaat.
+              Wij zijn Aegis VDO Netwerkbeheer. Wij worden de externe IT‑afdeling van kleine KMO’s en start‑ups: wij
+              kennen je omgeving, monitoren continu en grijpen in vóór er iets misgaat.
             </div>
           </div>
 
@@ -997,10 +1344,10 @@
       <section id="oplossing">
         <div class="section-header reveal">
           <div class="section-kicker">De oplossing</div>
-          <h2 class="section-title">Wij zijn uw externe IT-afdeling</h2>
+          <h2 class="section-title">Wij zijn je externe IT-afdeling</h2>
           <p class="section-subtitle">
-            Eén partner die uw netwerken, firewalls, cloudservers en gebruikers ondersteunt, met heldere afspraken en
-            duidelijke rapportering.
+            Eén partner die je netwerken, firewalls, cloudservers en gebruikers ondersteunt, met heldere afspraken,
+            duidelijke rapportering en voorspelbare maandprijzen.
           </p>
         </div>
 
@@ -1009,47 +1356,46 @@
             <article class="solution-card reveal reveal-delay-1">
               <div class="solution-card-title">Professionele netwerken</div>
               <div>
-                Design, implementatie en beheer van stabiele, schaalbare netwerken – bekabeld, Wi‑Fi en VPN – op maat
-                van uw organisatie.
+                Wij zetten stabiele, schaalbare netwerken op – bekabeld, Wi‑Fi en VPN – volledig afgestemd op je organisatie.
               </div>
             </article>
             <article class="solution-card reveal reveal-delay-1">
               <div class="solution-card-title">Firewalls & cybersecurity</div>
               <div>
-                Next‑gen firewalls, segmentatie en toegangsbeheer. Wij bewaken de toegang tot uw kritische gegevens.
+                Next‑gen firewalls, netwerksegmentatie en toegangsbeheer. Cybersecurity is geen extra module, maar de standaard.
               </div>
             </article>
             <article class="solution-card reveal reveal-delay-2">
-              <div class="solution-card-title">Cloud servers via Azure</div>
+              <div class="solution-card-title">Cloud servers via groene datacenters</div>
               <div>
-                Veilige, performante cloudomgevingen in Microsoft Azure, inclusief back‑ups en rightsized resources.
+                Veilige, performante cloudomgevingen in onder andere Microsoft Azure, met focus op energie‑efficiënte datacenters.
               </div>
             </article>
             <article class="solution-card reveal reveal-delay-2">
-              <div class="solution-card-title">24/7 monitoring & support</div>
+              <div class="solution-card-title">24/7 monitoring & first line support</div>
               <div>
-                Proactieve bewaking, automatische alerts en first line support voor uw medewerkers via één aanspreekpunt.
+                Proactieve bewaking, automatische alerts en first line support voor je medewerkers via één aanspreekpunt.
               </div>
             </article>
             <article class="solution-card reveal reveal-delay-3">
               <div class="solution-card-title">Opleidingen voor medewerkers</div>
               <div>
-                Praktische security awareness‑sessies om veilig gedrag te verankeren in uw organisatie.
+                Praktische security awareness‑sessies voor niet‑technische medewerkers, in klare taal.
               </div>
             </article>
             <article class="solution-card reveal reveal-delay-3">
               <div class="solution-card-title">Heldere rapportage</div>
               <div>
-                Duidelijke maandrapporten in mensentaal met incidenten, status en aanbevelingen.
+                Maandelijkse rapporten in mensentaal: wat er gebeurd is, wat de status is en welke verbeteringen we aanraden.
               </div>
             </article>
           </div>
 
           <aside class="solution-panel reveal reveal-delay-2">
-            <strong>Hoe het voelt met Aegis VDO naast u:</strong><br /><br />
-            U weet exact wie verantwoordelijk is voor uw netwerk. Geen versnipperde leveranciers of vage SLA’s, maar een
-            klein, betrokken team dat uw omgeving kent, meedenkt met uw plannen en vooruit plant in plaats van brandjes
-            te blussen.
+            <strong>Hoe het voelt met Aegis VDO naast je:</strong><br /><br />
+            Je weet exact wie verantwoordelijk is voor je netwerk. Geen versnipperde leveranciers of vage SLA’s, maar
+            een klein, betrokken team dat je omgeving kent, meedenkt met je plannen en vooruit plant in plaats van
+            brandjes te blussen.
           </aside>
         </div>
       </section>
@@ -1059,9 +1405,9 @@
       <section id="anders">
         <div class="section-header reveal">
           <div class="section-kicker">Wat maakt ons anders</div>
-          <h2 class="section-title">Veilig én duurzaam netwerkbeheer</h2>
+          <h2 class="section-title">Veilig, eenvoudig én duurzaam</h2>
           <p class="section-subtitle">
-            We combineren stevige cybersecurity met een bewuste, groene aanpak. Minder verspilling, meer waarde.
+            Wij combineren stevige cybersecurity met een bewuste, groene aanpak. Minder verspilling, meer waarde.
           </p>
         </div>
 
@@ -1079,7 +1425,7 @@
             <div class="diff-icon">🌍</div>
             <div class="diff-title">Groene datacenters</div>
             <div>
-              Uw data draait in Europese datacenters met een sterke focus op hernieuwbare energie en efficiënte koeling.
+              Je data draait in Europese datacenters met een sterke focus op hernieuwbare energie en efficiënte koeling.
             </div>
           </article>
 
@@ -1087,7 +1433,7 @@
             <div class="diff-icon">🔐</div>
             <div class="diff-title">Cybersecurity als standaard</div>
             <div>
-              Beveiliging is geen extra module maar het vertrekpunt bij elke configuratie en elk project.
+              Beveiliging is het vertrekpunt bij elke configuratie, elk project en elk abonnement – niet een dure optie achteraf.
             </div>
           </article>
         </div>
@@ -1100,8 +1446,8 @@
           <div class="section-kicker">Abonnementsmodel</div>
           <h2 class="section-title">Heldere pakketten, voorspelbare kosten</h2>
           <p class="section-subtitle">
-            Kies het pakket dat past bij de maturiteit en schaal van uw organisatie. Geen verrassingen, wel duidelijke
-            verantwoordelijkheden.
+            Wij werken met maandelijkse abonnementen in verschillende tiers. Geen onverwachte kosten, geen ingewikkelde
+            contracten – wel schaalbaar naargelang de groei van je bedrijf.
           </p>
         </div>
 
@@ -1162,7 +1508,7 @@
           <div class="section-kicker">Waarom werkt dit?</div>
           <h2 class="section-title">Pragmatische IT voor drukke KMO’s</h2>
           <p class="section-subtitle">
-            Geen buzzwords, maar een aanpak die past bij de dagelijkse realiteit van uw organisatie.
+            Geen buzzwords, maar een aanpak die past bij de dagelijkse realiteit van je organisatie.
           </p>
         </div>
 
@@ -1170,11 +1516,11 @@
           <div class="why-list">
             <div class="why-item reveal reveal-delay-1">
               <div class="why-check">✔</div>
-              <span>Persoonlijk – u spreekt met mensen, niet enkel met een ticketsysteem.</span>
+              <span>Persoonlijk – je spreekt met mensen, niet enkel met een ticketsysteem.</span>
             </div>
             <div class="why-item reveal reveal-delay-1">
               <div class="why-check">✔</div>
-              <span>Bereikbaar – korte lijnen, directe toegang tot engineers.</span>
+              <span>Bereikbaar – korte lijnen en directe toegang tot engineers.</span>
             </div>
             <div class="why-item reveal reveal-delay-2">
               <div class="why-check">✔</div>
@@ -1186,13 +1532,13 @@
             </div>
             <div class="why-item reveal reveal-delay-3">
               <div class="why-check">✔</div>
-              <span>Veilig – security by design in elke laag van uw netwerk.</span>
+              <span>Veilig – security by design in elke laag van je netwerk.</span>
             </div>
           </div>
 
           <aside class="why-note reveal reveal-delay-2">
             <strong>Aegis</strong> betekent bescherming. <br /><br />
-            Wij zien uw netwerk als een digitaal schild rond uw organisatie. Van eerste analyse tot dagelijkse
+            Wij zien je netwerk als een digitaal schild rond je organisatie. Van eerste analyse tot dagelijkse
             ondersteuning: we nemen verantwoordelijkheid, denken vooruit en communiceren helder – in mensentaal.
           </aside>
         </div>
@@ -1205,8 +1551,8 @@
           <h2 class="closing-title">Aegis betekent bescherming.</h2>
           <div class="closing-sub">En dat is exact wat wij doen.</div>
           <div class="closing-text">
-            Van netwerkdesign tot dagelijkse support: wij bouwen een betrouwbaar, veilig fundament zodat u zich volledig
-            kunt focussen op groei.
+            Van netwerkdesign tot dagelijkse support: wij bouwen een betrouwbaar, veilig fundament zodat jij je volledig
+            kunt focussen op groei, innovatie en ondernemen – zonder IT‑zorgen.
           </div>
           <div class="closing-actions">
             <button class="btn-primary" onclick="window.location.href='mailto:info@aegisvdo.example'">
