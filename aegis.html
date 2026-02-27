@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aegis VDO Netwerkbeheer – Cybersecurity & Netwerkbeheer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #05060a;
+      --bg-section: #080a10;
+      --bg-card: #0c0f18;
+      --accent-neon: #25f2a5;
+      --accent-blue: #33b5ff;
+      --text-main: #f4fbff;
+      --text-muted: #9aa7c3;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.24s ease-out;
+      --max-width: 1080px;
+      --nav-height: 70px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #000;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top, #101626 0, #05060a 52%, #000 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* Layout */
+    .page {
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 64px 0;
+      }
+    }
+
+    /* Header / Nav */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(6, 7, 12, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .nav {
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #defef5, var(--accent-neon));
+      box-shadow: 0 0 12px rgba(37, 242, 165, 0.8);
+    }
+
+    .logo-main {
+      font-family: "Orbitron", system-ui;
+      font-size: 1.05rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .logo-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: color var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-pill {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 9px 20px;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      color: #020305;
+      background: linear-gradient(120deg, var(--accent-neon), var(--accent-blue));
+      box-shadow: 0 0 16px rgba(37, 242, 165, 0.55);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(37, 242, 165, 0.75);
+      filter: brightness(1.03);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 0 12px rgba(37, 242, 165, 0.6);
+    }
+
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      padding: 8px 18px;
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: transparent;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(10, 12, 22, 0.9);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .nav-toggle-line {
+      width: 16px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-main);
+      position: relative;
+    }
+
+    .nav-toggle-line::before,
+    .nav-toggle-line::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-main);
+      left: 0;
+    }
+
+    .nav-toggle-line::before {
+      top: -5px;
+    }
+
+    .nav-toggle-line::after {
+      bottom: -5px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 48px 0 72px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 32px 0 56px;
+      }
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(12, 16, 28, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent-neon);
+      box-shadow: 0 0 8px rgba(37, 242, 165, 0.7);
+    }
+
+    .hero-title {
+      font-family: "Orbitron", system-ui;
+      font-size: clamp(2.2rem, 3vw, 2.8rem);
+      margin: 0 0 14px;
+      line-height: 1.15;
+      background: linear-gradient(130deg, #ffffff, #d9fef3, var(--accent-neon));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-title span.danger {
+      background: linear-gradient(130deg, #ffdde5, #ff4b6a);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 34rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-right {
+      border-radius: 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 20px 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+    }
+
+    .hero-metric-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-metric-main {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .hero-metric-main span {
+      background: linear-gradient(120deg, var(--accent-neon), var(--accent-blue));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-metric-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-metric-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-metric-tag {
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(13, 16, 30, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Section Headings */
+    .section-header {
+      margin-bottom: 32px;
+    }
+
+    .section-kicker {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-neon);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-family: "Orbitron", system-ui;
+      font-size: 1.6rem;
+      margin: 0 0 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+      line-height: 1.6;
+    }
+
+    /* Probleem */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .problem-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .problem-card {
+      display: flex;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: #12090c;
+      border: 1px solid rgba(255, 75, 106, 0.4);
+      color: #ffdfe8;
+      font-size: 0.9rem;
+    }
+
+    .problem-icon {
+      font-size: 1.1rem;
+      margin-top: 2px;
+    }
+
+    .problem-contrast {
+      margin-top: 16px;
+      padding: 14px 14px;
+      border-radius: var(--radius-md);
+      background: #07120f;
+      border: 1px solid rgba(37, 242, 165, 0.4);
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .problem-right {
+      border-radius: var(--radius-md);
+      background: var(--bg-section);
+      border: 1px solid var(--border-soft);
+      padding: 16px 16px 14px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .problem-right strong {
+      color: var(--text-main);
+    }
+
+    .problem-list {
+      padding-left: 16px;
+      margin: 10px 0 0;
+    }
+
+    .problem-list li {
+      margin-bottom: 4px;
+    }
+
+    /* Oplossing */
+    .solution-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 26px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .solution-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .solution-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .solution-card {
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 12px 12px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .solution-card-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .solution-card:hover {
+      border-color: rgba(37, 242, 165, 0.6);
+      background: #101420;
+      transform: translateY(-1px);
+    }
+
+    .solution-panel {
+      border-radius: var(--radius-md);
+      background: var(--bg-section);
+      border: 1px solid var(--border-soft);
+      padding: 16px 15px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .solution-panel strong {
+      color: var(--text-main);
+    }
+
+    /* Wat maakt ons anders */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .diff-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .diff-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .diff-card {
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 14px 14px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .diff-icon {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .diff-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .diff-card:hover {
+      border-color: rgba(37, 242, 165, 0.7);
+      transform: translateY(-1px);
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 800px) {
+      .pricing-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pricing-card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85);
+      transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(51, 181, 255, 0.7);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37, 242, 165, 0.7);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.9);
+    }
+
+    .pricing-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .pricing-name {
+      font-family: "Orbitron", system-ui;
+      font-size: 1.1rem;
+    }
+
+    .pricing-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(51, 181, 255, 0.6);
+      color: var(--accent-blue);
+      align-self: flex-start;
+    }
+
+    .pricing-price {
+      font-size: 1.3rem;
+      font-weight: 600;
+      background: linear-gradient(120deg, #ffffff, var(--accent-neon));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .pricing-price span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      -webkit-text-fill-color: var(--text-muted);
+    }
+
+    .pricing-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-list {
+      list-style: none;
+      padding: 0;
+      margin: 4px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.86rem;
+    }
+
+    .pricing-list li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .pricing-check {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(37, 242, 165, 0.7);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--accent-neon);
+      margin-top: 2px;
+    }
+
+    .pricing-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pricing-footer strong {
+      color: var(--text-main);
+    }
+
+    .pricing-btn {
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 7px 14px;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.94);
+      color: #020305;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .pricing-btn:hover {
+      background: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Waarom werkt dit */
+    .why-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .why-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .why-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .why-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-section);
+      border: 1px solid var(--border-soft);
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .why-check {
+      width: 14px;
+      height: 14px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent-neon), var(--accent-blue));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #020305;
+    }
+
+    .why-note {
+      border-radius: var(--radius-md);
+      background: var(--bg-section);
+      border: 1px solid var(--border-soft);
+      padding: 14px 14px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .why-note strong {
+      color: var(--text-main);
+    }
+
+    /* Closing */
+    .closing {
+      text-align: center;
+      padding-bottom: 72px;
+    }
+
+    .closing-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 26px 20px 30px;
+      box-shadow: 0 16px 46px rgba(0, 0, 0, 0.9);
+    }
+
+    .closing-title {
+      font-family: "Orbitron", system-ui;
+      font-size: 1.7rem;
+      margin: 0 0 8px;
+      background: linear-gradient(120deg, #ffffff, var(--accent-neon));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .closing-sub {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .closing-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .closing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px 0 22px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* Reveal (veel soberder) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.05s; }
+    .reveal-delay-2 { transition-delay: 0.1s; }
+    .reveal-delay-3 { transition-delay: 0.15s; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Navigatie -->
+    <header class="top-bar">
+      <div class="container">
+        <nav class="nav">
+          <div class="logo-wrap">
+            <div class="logo-mark" aria-hidden="true"></div>
+            <div>
+              <div class="logo-main">Aegis VDO</div>
+              <div class="logo-sub">NETWERKBEHEER & CYBERSECURITY</div>
+            </div>
+          </div>
+
+          <div class="nav-links">
+            <a href="#probleem">Probleem</a>
+            <a href="#oplossing">Oplossing</a>
+            <a href="#abonnementen">Abonnementen</a>
+            <a href="#waarom">Waarom</a>
+          </div>
+
+          <div class="nav-cta">
+            <div class="nav-pill">Voor KMO’s & start-ups</div>
+            <button class="btn-primary" onclick="document.getElementById('oplossing').scrollIntoView({behavior:'smooth'})">
+              Ontdek onze aanpak
+            </button>
+          </div>
+
+          <button class="nav-toggle" aria-label="Open navigatie">
+            <div class="nav-toggle-line"></div>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- HERO -->
+      <!-- ----------------------------------------- -->
+      <section id="hero" class="hero">
+        <div class="hero-left">
+          <div class="hero-tag reveal">
+            <div class="hero-dot"></div>
+            <span>Extern IT-team voor kritische netwerken</span>
+          </div>
+          <h1 class="hero-title reveal reveal-delay-1">
+            <span class="danger">Uw netwerk valt uit.</span><br />Uw data is kwetsbaar.
+          </h1>
+          <p class="hero-subtitle reveal reveal-delay-2">
+            <strong>Elke minuut downtime kost u geld, vertrouwen en reputatie.</strong><br />
+            Aegis VDO Netwerkbeheer beschermt uw onderneming tegen digitale risico’s – proactief, 24/7 en op maat
+            van KMO’s en snelgroeiende start-ups.
+          </p>
+          <div class="hero-cta-row reveal reveal-delay-2">
+            <button class="btn-primary" onclick="document.getElementById('oplossing').scrollIntoView({behavior:'smooth'})">
+              Ontdek onze aanpak
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('abonnementen').scrollIntoView({behavior:'smooth'})">
+              Bekijk pakketten
+            </button>
+          </div>
+          <div class="hero-note reveal reveal-delay-3">
+            24/7 monitoring, Nederlandstalige support en voorspelbare maandelijkse kosten.
+          </div>
+        </div>
+
+        <aside class="hero-right reveal reveal-delay-2" aria-label="Netwerkstatus samenvatting">
+          <div class="hero-metric-label">Netwerkbescherming in één oogopslag</div>
+          <div class="hero-metric-main">
+            <span>99,9%</span> beoogde uptime
+          </div>
+          <div class="hero-metric-sub">
+            Wij bewaken uw firewalls, switches, servers en cloudomgeving zodat incidenten opgevangen worden vóór ze
+            voelbaar worden op de werkvloer.
+          </div>
+          <div class="hero-metric-tags">
+            <div class="hero-metric-tag">24/7 monitoring</div>
+            <div class="hero-metric-tag">Azure-expertise</div>
+            <div class="hero-metric-tag">KMO-focuste aanpak</div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- PROBLEEM -->
+      <!-- ----------------------------------------- -->
+      <section id="probleem">
+        <div class="section-header reveal">
+          <div class="section-kicker">Het probleem</div>
+          <h2 class="section-title">De verkeerde IT-aanpak maakt u kwetsbaar</h2>
+          <p class="section-subtitle">
+            Cyberaanvallen, misconfiguraties en verouderde hardware zorgen voor stilstand, dataverlies en
+            reputatieschade. De meeste organisaties merken het pas als het al te laat is.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <div>
+            <div class="problem-card reveal reveal-delay-1">
+              <div class="problem-icon">❌</div>
+              <div>
+                <strong>Een dure, onpersoonlijke IT-gigant</strong><br />
+                Lange wachttijden, standaardoplossingen en telkens een andere contactpersoon. Uw business is een nummer
+                in de wachtrij.
+              </div>
+            </div>
+            <div class="problem-card reveal reveal-delay-2">
+              <div class="problem-icon">❌</div>
+              <div>
+                <strong>Zelf proberen oplossen zonder expertise</strong><br />
+                Ad-hocoplossingen en workarounds. Tot er écht iets gebeurt: ransomware, datalek of dagenlange downtime.
+              </div>
+            </div>
+            <div class="problem-contrast reveal reveal-delay-3">
+              <strong>Dat is het probleem dat wij oplossen.</strong><br />
+              Met Aegis VDO krijgt u een toegewijd extern IT-team dat uw omgeving kent, continu monitort en ingrijpt
+              vóór er iets misgaat.
+            </div>
+          </div>
+
+          <aside class="problem-right reveal reveal-delay-2">
+            <strong>Wat er vandaag vaak onzichtbaar gebeurt:</strong>
+            <ul class="problem-list">
+              <li>Geen strak patchbeleid of overzicht van kwetsbaarheden.</li>
+              <li>Verouderde firewalls en open poorten naar het internet.</li>
+              <li>Geen duidelijk aanspreekpunt bij een incident.</li>
+              <li>Herstel achteraf blijkt altijd duurder dan preventie.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- OPLOSSING -->
+      <!-- ----------------------------------------- -->
+      <section id="oplossing">
+        <div class="section-header reveal">
+          <div class="section-kicker">De oplossing</div>
+          <h2 class="section-title">Wij zijn uw externe IT-afdeling</h2>
+          <p class="section-subtitle">
+            Eén partner die uw netwerken, firewalls, cloudservers en gebruikers ondersteunt, met heldere afspraken en
+            duidelijke rapportering.
+          </p>
+        </div>
+
+        <div class="solution-layout">
+          <div class="solution-grid">
+            <article class="solution-card reveal reveal-delay-1">
+              <div class="solution-card-title">Professionele netwerken</div>
+              <div>
+                Design, implementatie en beheer van stabiele, schaalbare netwerken – bekabeld, Wi‑Fi en VPN – op maat
+                van uw organisatie.
+              </div>
+            </article>
+            <article class="solution-card reveal reveal-delay-1">
+              <div class="solution-card-title">Firewalls & cybersecurity</div>
+              <div>
+                Next‑gen firewalls, segmentatie en toegangsbeheer. Wij bewaken de toegang tot uw kritische gegevens.
+              </div>
+            </article>
+            <article class="solution-card reveal reveal-delay-2">
+              <div class="solution-card-title">Cloud servers via Azure</div>
+              <div>
+                Veilige, performante cloudomgevingen in Microsoft Azure, inclusief back‑ups en rightsized resources.
+              </div>
+            </article>
+            <article class="solution-card reveal reveal-delay-2">
+              <div class="solution-card-title">24/7 monitoring & support</div>
+              <div>
+                Proactieve bewaking, automatische alerts en first line support voor uw medewerkers via één aanspreekpunt.
+              </div>
+            </article>
+            <article class="solution-card reveal reveal-delay-3">
+              <div class="solution-card-title">Opleidingen voor medewerkers</div>
+              <div>
+                Praktische security awareness‑sessies om veilig gedrag te verankeren in uw organisatie.
+              </div>
+            </article>
+            <article class="solution-card reveal reveal-delay-3">
+              <div class="solution-card-title">Heldere rapportage</div>
+              <div>
+                Duidelijke maandrapporten in mensentaal met incidenten, status en aanbevelingen.
+              </div>
+            </article>
+          </div>
+
+          <aside class="solution-panel reveal reveal-delay-2">
+            <strong>Hoe het voelt met Aegis VDO naast u:</strong><br /><br />
+            U weet exact wie verantwoordelijk is voor uw netwerk. Geen versnipperde leveranciers of vage SLA’s, maar een
+            klein, betrokken team dat uw omgeving kent, meedenkt met uw plannen en vooruit plant in plaats van brandjes
+            te blussen.
+          </aside>
+        </div>
+      </section>
+
+      <!-- WAT MAAKT ONS ANDERS -->
+      <!-- ----------------------------------------- -->
+      <section id="anders">
+        <div class="section-header reveal">
+          <div class="section-kicker">Wat maakt ons anders</div>
+          <h2 class="section-title">Veilig én duurzaam netwerkbeheer</h2>
+          <p class="section-subtitle">
+            We combineren stevige cybersecurity met een bewuste, groene aanpak. Minder verspilling, meer waarde.
+          </p>
+        </div>
+
+        <div class="diff-grid">
+          <article class="diff-card reveal reveal-delay-1">
+            <div class="diff-icon">🌱</div>
+            <div class="diff-title">Energiezuinige hardware</div>
+            <div>
+              Moderne, energiezuinige switches, firewalls en servers die minder verbruiken en langer meegaan – zonder
+              in te boeten op performance.
+            </div>
+          </article>
+
+          <article class="diff-card reveal reveal-delay-2">
+            <div class="diff-icon">🌍</div>
+            <div class="diff-title">Groene datacenters</div>
+            <div>
+              Uw data draait in Europese datacenters met een sterke focus op hernieuwbare energie en efficiënte koeling.
+            </div>
+          </article>
+
+          <article class="diff-card reveal reveal-delay-3">
+            <div class="diff-icon">🔐</div>
+            <div class="diff-title">Cybersecurity als standaard</div>
+            <div>
+              Beveiliging is geen extra module maar het vertrekpunt bij elke configuratie en elk project.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ABONNEMENTEN -->
+      <!-- ----------------------------------------- -->
+      <section id="abonnementen">
+        <div class="section-header reveal">
+          <div class="section-kicker">Abonnementsmodel</div>
+          <h2 class="section-title">Heldere pakketten, voorspelbare kosten</h2>
+          <p class="section-subtitle">
+            Kies het pakket dat past bij de maturiteit en schaal van uw organisatie. Geen verrassingen, wel duidelijke
+            verantwoordelijkheden.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="pricing-card reveal reveal-delay-1">
+            <div class="pricing-label">Abonnement</div>
+            <div class="pricing-name">Start-up pakket</div>
+            <div class="pricing-price">
+              vanaf €XXX / maand <span>(excl. BTW)</span>
+            </div>
+            <div class="pricing-desc">
+              Voor jonge organisaties die vanaf het begin veilig en professioneel willen groeien.
+            </div>
+            <ul class="pricing-list">
+              <li><span class="pricing-check">✔</span> Basisnetwerkbeheer & patching</li>
+              <li><span class="pricing-check">✔</span> 8u/5d remote support</li>
+              <li><span class="pricing-check">✔</span> Monitoring van kritische systemen</li>
+              <li><span class="pricing-check">✔</span> Jaarlijkse security quickscan</li>
+            </ul>
+            <div class="pricing-footer">
+              <span><strong>Focus:</strong> veilig starten</span>
+              <button class="pricing-btn" onclick="document.getElementById('closing').scrollIntoView({behavior:'smooth'})">
+                Plan intake
+              </button>
+            </div>
+          </article>
+
+          <article class="pricing-card featured reveal reveal-delay-2">
+            <div class="pricing-label">Abonnement</div>
+            <div class="pricing-name">Scale-up / Premium pakket</div>
+            <div class="pricing-badge">Meest gekozen</div>
+            <div class="pricing-price">
+              vanaf €XXX / maand <span>(excl. BTW)</span>
+            </div>
+            <div class="pricing-desc">
+              Voor KMO’s en scale‑ups die 24/7 beschikbaarheid eisen en hun netwerk zien als kern van hun business.
+            </div>
+            <ul class="pricing-list">
+              <li><span class="pricing-check">✔</span> Uitgebreid netwerk- & firewallbeheer</li>
+              <li><span class="pricing-check">✔</span> 24/7 monitoring & incidentmelding</li>
+              <li><span class="pricing-check">✔</span> Azure‑architectuur & beheer inbegrepen</li>
+              <li><span class="pricing-check">✔</span> Kwartaalreview met roadmap</li>
+            </ul>
+            <div class="pricing-footer">
+              <span><strong>Focus:</strong> continuïteit & schaalbaarheid</span>
+              <button class="pricing-btn" onclick="document.getElementById('closing').scrollIntoView({behavior:'smooth'})">
+                Vraag voorstel
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- WAAROM WERKT DIT -->
+      <!-- ----------------------------------------- -->
+      <section id="waarom">
+        <div class="section-header reveal">
+          <div class="section-kicker">Waarom werkt dit?</div>
+          <h2 class="section-title">Pragmatische IT voor drukke KMO’s</h2>
+          <p class="section-subtitle">
+            Geen buzzwords, maar een aanpak die past bij de dagelijkse realiteit van uw organisatie.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <div class="why-list">
+            <div class="why-item reveal reveal-delay-1">
+              <div class="why-check">✔</div>
+              <span>Persoonlijk – u spreekt met mensen, niet enkel met een ticketsysteem.</span>
+            </div>
+            <div class="why-item reveal reveal-delay-1">
+              <div class="why-check">✔</div>
+              <span>Bereikbaar – korte lijnen, directe toegang tot engineers.</span>
+            </div>
+            <div class="why-item reveal reveal-delay-2">
+              <div class="why-check">✔</div>
+              <span>Betaalbaar – voorspelbare maandkosten, zonder verborgen posten.</span>
+            </div>
+            <div class="why-item reveal reveal-delay-2">
+              <div class="why-check">✔</div>
+              <span>Duurzaam – focus op efficiënte, energiezuinige oplossingen.</span>
+            </div>
+            <div class="why-item reveal reveal-delay-3">
+              <div class="why-check">✔</div>
+              <span>Veilig – security by design in elke laag van uw netwerk.</span>
+            </div>
+          </div>
+
+          <aside class="why-note reveal reveal-delay-2">
+            <strong>Aegis</strong> betekent bescherming. <br /><br />
+            Wij zien uw netwerk als een digitaal schild rond uw organisatie. Van eerste analyse tot dagelijkse
+            ondersteuning: we nemen verantwoordelijkheid, denken vooruit en communiceren helder – in mensentaal.
+          </aside>
+        </div>
+      </section>
+
+      <!-- AFSLUITER -->
+      <!-- ----------------------------------------- -->
+      <section id="closing" class="closing">
+        <div class="closing-inner reveal">
+          <h2 class="closing-title">Aegis betekent bescherming.</h2>
+          <div class="closing-sub">En dat is exact wat wij doen.</div>
+          <div class="closing-text">
+            Van netwerkdesign tot dagelijkse support: wij bouwen een betrouwbaar, veilig fundament zodat u zich volledig
+            kunt focussen op groei.
+          </div>
+          <div class="closing-actions">
+            <button class="btn-primary" onclick="window.location.href='mailto:info@aegisvdo.example'">
+              Plan een gesprek
+            </button>
+            <button class="btn-ghost" onclick="document.getElementById('oplossing').scrollIntoView({behavior:'smooth'})">
+              Bekijk aanpak opnieuw
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <!-- ----------------------------------------- -->
+      <footer class="footer">
+        <span>© Aegis VDO Netwerkbeheer – Digitale bescherming voor ambitieuze organisaties.</span>
+        <div class="footer-links">
+          <a href="#hero">Terug naar boven</a>
+          <a href="#abonnementen">Pakketten</a>
+          <a href="#waarom">Waarom Aegis</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Eenvoudige IntersectionObserver voor lichte fade-in animaties
+    (function () {
+      const els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        els.forEach(el => el.classList.add("visible"));
+        return;
+      }
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      els.forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
